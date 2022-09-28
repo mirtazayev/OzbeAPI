@@ -11,7 +11,6 @@ from services.auth_service import TokenData
 from settings import settings
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="/users/login")
-# oauth2_schema = OAuth2PasswordBearer(tokenUrl="login")
 
 
 def verify_access_token(token: str, credentials_exception):
