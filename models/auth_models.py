@@ -10,4 +10,3 @@ class Users(BaseModel, Base):
     username: str = Column(String(length=100), index=False)
     password: str = Column(String(length=300))
     is_active: bool = Column(Boolean, server_default='True')
-

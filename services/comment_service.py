@@ -12,7 +12,7 @@ from services import product_service
 def create(dto: CommentCreateDTO, db: Session, session_user: Users):
     product_service.get(dto.product_id, db)
     comments = Comment(**dto.dict())
-    comments.product_id = dto.product_id
+    # comments.product_id = dto.product_id
     comments.created_by = session_user.id
     db.add(comments)
     db.commit()

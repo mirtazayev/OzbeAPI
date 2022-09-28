@@ -1,8 +1,9 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from simplejwt import jwt, Jwt
+from jose import JWTError
+from simplejwt import jwt
 from sqlalchemy.orm import Session
-from starlette import status
+from datetime import datetime, timedelta
 
 from database.database_config import get_db
 from models.auth_models import Users
@@ -10,21 +11,21 @@ from services import auth_service
 from services.auth_service import TokenData
 from settings import settings
 
-oauth2_schema = OAuth2PasswordBearer(tokenUrl="/users/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 def verify_access_token(token: str, credentials_exception):
     try:
-        payload = jwt.decode(token, settings.secret_key, algorithms=settings.algorithm)
+        payload = jwt.decode(token=token, secret=settings.secret_key)
         user_id: str = payload.get('user_id')
         if not user_id:
             raise credentials_exception
         return TokenData(id=user_id)
-    except Jwt:
+    except JWTError:
         raise credentials_exception
 
 
-def get_session_user(db: Session = Depends(get_db), token: str = Depends(oauth2_schema)) -> Users:
+def get_session_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)) -> Users:
     credentials_exception = HTTPException(
         detail={'error': 'Could not validate credentials'},
         headers={'WWW-Authenticate': 'Bearer'},

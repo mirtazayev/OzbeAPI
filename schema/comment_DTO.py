@@ -5,6 +5,7 @@ from configs.comment_config import CommentCreateConfig
 
 class CommentCreateDTO(CommentCreateConfig):
     product_id: int
+    created_by: str
     message: str
 
     @validator('message')

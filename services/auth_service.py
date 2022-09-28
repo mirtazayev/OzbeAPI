@@ -1,12 +1,11 @@
-import datetime
+from datetime import datetime, timedelta
+from typing import Optional
 
 from fastapi import HTTPException
+from jose import jwt
 from pydantic import BaseModel
-from pydantic.schema import timedelta
-from simplejwt import jwt
 from sqlalchemy.orm import Session
 from starlette import status
-from typing import Optional
 
 from models.auth_models import Users
 from schema.auth_DTO import UserLoginDTO
@@ -14,17 +13,17 @@ from services import utils
 from settings import settings
 
 
-class TokenData(BaseModel):
-    id: Optional[str] = None
-
-
 def generate_access_token(data: dict):
     to_encode = data.copy()
-    expiry = datetime.datetime.now() + timedelta(minutes=settings.access_token_expire_minutes)
+    expiry = datetime.now() + timedelta(minutes=settings.access_token_expire_minutes)
     to_encode.update({
         'exp': expiry, })
-    encoded_token = jwt.encode(settings.secret_key, settings.algorithm)
+    encoded_token = jwt.encode(to_encode, settings.secret_key, settings.algorithm)
     return encoded_token
+
+
+class TokenData(BaseModel):
+    id: Optional[str] = None
 
 
 def create(dto: UserLoginDTO, db: Session):

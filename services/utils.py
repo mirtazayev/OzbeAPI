@@ -1,11 +1,24 @@
+from uuid import uuid4
+from time import time_ns
+from passlib.context import CryptContext
 from os.path import join as join_path
 from pathlib import Path
-
-from passlib.context import CryptContext
 
 BASE_DIR = Path(__file__).parent.parent
 UPLOADS_DIR = join_path(BASE_DIR, 'uploads')
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated="auto")
+
+
+def unique_code():
+    return f'{time_ns()}{uuid4()}'
+
+
+def get_extension(filename: str):
+    return filename.split(".")[-1]
+
+
+def generate_new_name(filename: str):
+    return f'{unique_code()}.{get_extension(filename)}'
 
 
 def encode_password(raw_password: str):

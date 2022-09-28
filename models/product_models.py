@@ -22,8 +22,6 @@ class Comment(BaseModel, Base):
     message: str = Column(String(100))
     product_id: int = Column(Integer, ForeignKey('product.id'))
 
-    # comment = relationship('Product', back_populates='comment', cascade='all, delete, delete-orphan')
-
     created_by: int = Column(Integer, ForeignKey('user.id'), nullable=False)
 
 
@@ -41,9 +39,6 @@ class Product(BaseModel, Base):
 
     category_id = Column(Integer, ForeignKey('category.id', ondelete='CASCADE'))
     category = relationship('Category', back_populates="product")
-
-    # comment_id = Column(Integer, ForeignKey('comment.id', ondelete='CASCADE'))
-    # comment = relationship('Comment', back_populates="comment")
 
     def __repr__(self):
         return self.title
