@@ -3,7 +3,6 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
 from simplejwt import jwt
 from sqlalchemy.orm import Session
-from datetime import datetime, timedelta
 
 from database.database_config import get_db
 from models.auth_models import Users
@@ -17,7 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def verify_access_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token=token, secret=settings.secret_key)
-        user_id: str = payload.get('user_id')
+        user_id: str = payload[1].get('user_id')
         if not user_id:
             raise credentials_exception
         return TokenData(id=user_id)
