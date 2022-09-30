@@ -1,10 +1,9 @@
-from fastapi import APIRouter, Depends, Query, Body
+from fastapi import APIRouter, Depends, Body
 from sqlalchemy.orm import Session
 
+from Models.models import Users, Comment
 from configs.auths import get_session_user
 from database.database_config import get_db
-from models.auth_models import Users
-from models.product_models import Comment
 from schema.comment_DTO import CommentCreateDTO
 from services import comment_service
 

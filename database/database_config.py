@@ -1,17 +1,15 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.engine import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-DB_URL = 'sqlite:///db.sqlite'
-
-engine = create_engine(DB_URL, connect_args={'check_same_thread': False})
-session = sessionmaker(autocommit=False, bind=engine)
 Base = declarative_base()
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+DATABASE_URL = 'postgresql+psycopg2://postgres:1@localhost/ozbe'
+engine = create_engine(DATABASE_URL, echo=True)
+Session = sessionmaker(engine)
 
 
 def get_db():
-    db = SessionLocal()
+    db = Session()
     try:
         yield db
     finally:

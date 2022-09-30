@@ -7,7 +7,8 @@ class ProductDTO(BaseModel):
     price: float
     image: UploadFile or None = File(None)
     description: str
-    tag: str
+    additional_data: str
+    quantity: int
     in_stock: bool
 
 

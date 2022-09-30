@@ -3,8 +3,8 @@ import shutil
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from Models.models import Product
 from database.database_config import get_db
-from models.product_models import Product
 from schema.product_DTO import ProductDTO
 from services import product_service
 

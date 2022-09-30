@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from starlette import status
 
-from models.product_models import Product
+from Models.models import Product
 from schema.product_DTO import ProductDTO
 
 

@@ -3,8 +3,7 @@ from fastapi.openapi.models import Response
 from sqlalchemy.orm import Session
 from starlette import status
 
-from models.auth_models import Users
-from models.product_models import Comment
+from Models.models import Comment, Users
 from schema.comment_DTO import CommentCreateDTO
 from services import product_service
 
@@ -12,7 +11,7 @@ from services import product_service
 def create(dto: CommentCreateDTO, db: Session, session_user: Users):
     product_service.get(dto.product_id, db)
     comments = Comment(**dto.dict())
-    # comments.product_id = dto.product_id
+    comments.product_id = dto.product_id
     comments.created_by = session_user.id
     db.add(comments)
     db.commit()

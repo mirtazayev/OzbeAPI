@@ -5,7 +5,7 @@ from simplejwt import jwt
 from sqlalchemy.orm import Session
 
 from database.database_config import get_db
-from models.auth_models import Users
+from Models.models import Users
 from services import auth_service
 from services.auth_service import TokenData
 from settings import settings

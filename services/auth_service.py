@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from starlette import status
 
-from models.auth_models import Users
+from Models.models import Users
 from schema.auth_DTO import UserLoginDTO
 from services import utils
 from settings import settings
